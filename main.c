@@ -16,6 +16,16 @@ static char 		cbuf[64];
 static char 		ccopy[64];
 static char 		buffer[128];
 static int 			mclick;
+static const char* command_list = "COMMAND LIST:\n"
+	"\4START\1 - START MONITORING\n"
+	"\4STOP\1 - STOP MONITORING\n"
+	"\4TUNE\1 - START/STOP LIVE TUNER\n"
+	"\4EXIT/QUIT\1 - CLOSE PROGRAM"
+	"\0";
+	
+static void print_commands() {
+	post_message(command_list);
+}
 
 static int process_commands() {
 	if(strlen(cbuf) > 1) {
@@ -34,9 +44,10 @@ static int process_commands() {
 			start_playback();
 		else if(strcmp(ccopy,"STOP") == 0)
 			stop_devices();
-		else if(strcmp(ccopy,"TUNE") == 0) {
+		else if(strcmp(ccopy,"TUNE") == 0)
 			toggle_tuner();
-		}
+		else if(strcmp(ccopy,"HELP") == 0)
+			print_commands();
 		else {
 			sprintf(buffer,"UNKNOWN COMMAND: \"%s\"",ccopy);
 			post_message(buffer);
@@ -187,7 +198,7 @@ int main(int argc, char* argv[])
 	cdial = NULL;
 	tempdial = NULL;
 	
-	float dx = -0.5, dxt = 0.125, dy = 0.5, dw = 0.025, dh = 0.25;
+	float dx = -0.25, dxt = 0.125, dy = 0.5, dw = 0.025, dh = 0.25;
 	
 	add_dial(dx,dy,dw,dh,1.f,&master_vol,NULL,"VOL",0);
 	dx += dxt;
@@ -205,12 +216,13 @@ int main(int argc, char* argv[])
 	dx += dxt;
 	add_dial(dx,dy,dw,dh,0.25,&feedback,NULL,"FEED",0);
 	
-	dx = -0.5;
+	dx = -0.25;
 	for(int i = 0; i < EQ_BANDS; i++) {
 		add_dial(dx+i*dxt,-0.5,dw,dh,1.f,&eq[i],NULL,eq_strings[i],0);
 	}
 	
 	post_message("UNAS SYSTEM STARTED.");
+	post_message("TYPE \4HELP \1TO LIST COMMANDS.");
 	
 	if(!init_audio()) {
 
