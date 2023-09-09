@@ -15,6 +15,7 @@ UNAS relies on the following dependencies:
   + BASS
   + BASS_FX
   + BASSASIO
+  + GLAD
   + libaubio
 
 I'm using the 64-bit pre-built versions of each of these libraries. If you want to build them yourself, note that BASSASIO may give you trouble due to unavailablility of ASIO C source code
