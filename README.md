@@ -11,10 +11,12 @@ Your audio interface should be set to 48000Hz sample rate with a buffer size les
   + Live tuning
 
 
-UNAS relies on the following dependencies. I'm using the 64-bit pre-built versions of each of these libraries. If you want to build them yourself, note that BASSASIO may give you trouble due to unavailablility of ASIO C source code:
+UNAS relies on the following dependencies:
   + BASS
   + BASS_FX
   + BASSASIO
   + libaubio
+
+I'm using the 64-bit pre-built versions of each of these libraries. If you want to build them yourself, note that BASSASIO may give you trouble due to unavailablility of ASIO C source code
 
 To build, simply run make.
